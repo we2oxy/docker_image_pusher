@@ -1,6 +1,16 @@
-nginx
+#nginx
 #支持私库
-k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.0.0
-xhofe/alist:latest
+#k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.0.0
+#xhofe/alist:latest
 #支持指定架构
---platform=linux/arm64 xiaoyaliu/alist
+--platform=linux/amd64 registry.k8s.io/kube-apiserver:v1.18.20
+--platform=linux/amd64 registry.k8s.io/kube-controller-manager:v1.18.20
+--platform=linux/amd64 registry.k8s.io/kube-proxy:v1.18.20
+--platform=linux/amd64 registry.k8s.io/kube-scheduler:v1.18.20
+--platform=linux/amd64 registry.k8s.io/conformance:v1.18.20
+--platform=linux/amd64 registry.k8s.io/mounter:v1.18.20
+--platform=linux/amd64 registry.k8s.io/kubectl-convert:v1.18.20
+--platform=linux/amd64 registry.k8s.io/kubelet:v1.18.20
+--platform=linux/amd64 registry.k8s.io/apiextensions-apiserver:v1.18.20
+--platform=linux/amd64 registry.k8s.io/kube-aggregator:v1.18.20
+--platform=linux/amd64 registry.k8s.io/kube-log-runner:v1.18.20
