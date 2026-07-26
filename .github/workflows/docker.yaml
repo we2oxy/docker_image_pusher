@@ -8,7 +8,6 @@ on:
 
 env:
   ALIYUN_REGISTRY: "${{ secrets.ALIYUN_REGISTRY }}"
-  ALIYUN_NAME_SPACE: "${{ secrets.ALIYUN_NAME_SPACE }}"
   ALIYUN_REGISTRY_USER: "${{ secrets.ALIYUN_REGISTRY_USER }}"
   ALIYUN_REGISTRY_PASSWORD: "${{ secrets.ALIYUN_REGISTRY_PASSWORD }}"
 
@@ -106,8 +105,6 @@ jobs:
                 continue
             fi
         
-            echo "docker pull $line"
-            docker pull $line
             platform=$(echo "$line" | awk -F'--platform[ =]' '{if (NF>1) print $2}' | awk '{print $1}')
             echo "platform is $platform"
             # 如果存在架构信息 将架构信息拼到镜像名称前面
@@ -119,6 +116,15 @@ jobs:
             echo "platform_prefix is $platform_prefix"
             # 获取镜像的完整名称，例如kasmweb/nginx:1.25.3（命名空间/镜像名:版本号）
             image=$(echo "$line" | awk '{print $NF}')
+
+            # docker pull: 显式构造参数, 避免 --namespace 等自定义标记被传进 docker CLI
+            if [ -z "$platform" ]; then
+                echo "docker pull $image"
+                docker pull "$image"
+            else
+                echo "docker pull --platform $platform $image"
+                docker pull --platform "$platform" "$image"
+            fi
 
             # 获取 镜像名:版本号  例如nginx:1.25.3
             image_name_tag=$(echo "$image" | awk -F'/' '{print $NF}')
@@ -138,7 +144,15 @@ jobs:
             
             # 将@sha256:等字符删除
             image_name_tag="${image_name_tag%%@*}"
-            new_image="$ALIYUN_REGISTRY/$ALIYUN_NAME_SPACE/$image_name_tag"
+
+            # 解析每镜像的目标命名空间, 未指定则默认 vla_base_images
+            image_namespace=$(echo "$line" | awk -F'--namespace[ =]' '{if (NF>1) print $2}' | awk '{print $1}')
+            if [ -z "$image_namespace" ]; then
+                image_namespace="vla_base_images"
+            fi
+            echo "target namespace: $image_namespace"
+
+            new_image="$ALIYUN_REGISTRY/$image_namespace/$image_name_tag"
             echo "docker tag $image $new_image"
             docker tag $image $new_image
             echo "docker push $new_image"

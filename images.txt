@@ -1,3 +1,26 @@
+# ============================================
+# images.txt 格式说明
+# ============================================
+# 每行一个镜像，格式：
+#   [--platform=<架构>] [--namespace=<目标命名空间>] <镜像引用>
+#
+# 字段说明：
+#   --platform   : 可选, 指定镜像架构 (如 linux/amd64, linux/arm64)
+#   --namespace  : 可选, 指定推送到阿里云的命名空间, 不指定则默认 vla_base_images
+#   <镜像引用>   : 必填, 标准 docker 镜像 (如 nginx:latest, repo/image:v1.0)
+#
+# 注意：
+#   - --platform 和 --namespace 必须放在镜像引用的前面
+#   - 以 # 开头的行为注释，会被忽略
+#   - 空行会被忽略
+#
+# 示例：
+#   nginx:latest                                        → 默认架构 + 默认命名空间 vla_base_images
+#   --platform=linux/amd64 registry.k8s.io/pause:3.10.1 → 指定架构 + 默认命名空间 vla_base_images
+#   --namespace=k8s-core registry.k8s.io/etcd:3.6.6-0   → 默认架构 + 指定命名空间 k8s-core
+#   --platform=linux/amd64 --namespace=k8s-infra registry.k8s.io/coredns:v1.13.1
+# ============================================
+
 #nginx
 #支持私库
 #k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.0.0
@@ -19,11 +42,11 @@
 
 
 
---platform=linux/amd64 registry.k8s.io/kube-apiserver:v1.35.7
---platform=linux/amd64 registry.k8s.io/kube-controller-manager:v1.35.7
---platform=linux/amd64 registry.k8s.io/kube-scheduler:v1.35.7
---platform=linux/amd64 registry.k8s.io/kube-proxy:v1.35.7
---platform=linux/amd64 registry.k8s.io/coredns/coredns:v1.13.1
---platform=linux/amd64 registry.k8s.io/pause:3.10.1
---platform=linux/amd64 registry.k8s.io/etcd:3.6.6-0
---platform=linux/amd64 registry.k8s.io/conformance:v1.35.7
+--platform=linux/amd64 --namespace=vla_deploy_images registry.k8s.io/kube-apiserver:v1.35.7
+--platform=linux/amd64 --namespace=vla_deploy_images registry.k8s.io/kube-controller-manager:v1.35.7
+--platform=linux/amd64 --namespace=vla_deploy_images registry.k8s.io/kube-scheduler:v1.35.7
+--platform=linux/amd64 --namespace=vla_deploy_images registry.k8s.io/kube-proxy:v1.35.7
+--platform=linux/amd64 --namespace=vla_deploy_images registry.k8s.io/coredns/coredns:v1.13.1
+--platform=linux/amd64 --namespace=vla_deploy_images registry.k8s.io/pause:3.10.1
+--platform=linux/amd64 --namespace=vla_deploy_images registry.k8s.io/etcd:3.6.6-0
+--platform=linux/amd64 --namespace=vla_deploy_images registry.k8s.io/conformance:v1.35.7
