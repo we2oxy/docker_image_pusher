@@ -7,11 +7,23 @@
 #--platform=linux/amd64 registry.k8s.io/kube-controller-manager:v1.18.20
 #--platform=linux/amd64 registry.k8s.io/kube-proxy:v1.18.20
 #--platform=linux/amd64 registry.k8s.io/kube-scheduler:v1.18.20
---platform=linux/amd64 registry.k8s.io/conformance:v1.18.20
+#--platform=linux/amd64 registry.k8s.io/conformance:v1.18.20
 #--platform=linux/amd64 registry.k8s.io/etcd:v1.18.20
 #--platform=linux/amd64 registry.k8s.io/kubectl-convert:v1.18.20
---platform=linux/amd64 registry.k8s.io/kubelet:v1.18.20
---platform=linux/amd64 registry.k8s.io/apiextensions-apiserver:v1.18.20
---platform=linux/amd64 registry.k8s.io/kubeadm:v1.18.20
---platform=linux/amd64 registry.k8s.io/pause:v1.18.20
---platform=linux/amd64 registry.k8s.io/coredns:v1.18.20
+#--platform=linux/amd64 registry.k8s.io/kubelet:v1.18.20
+#--platform=linux/amd64 registry.k8s.io/apiextensions-apiserver:v1.18.20
+#--platform=linux/amd64 registry.k8s.io/kubeadm:v1.18.20
+#--platform=linux/amd64 registry.k8s.io/pause:v1.18.20
+#--platform=linux/amd64 registry.k8s.io/coredns:v1.18.20
+
+
+
+
+--platform=linux/amd64 registry.k8s.io/kube-apiserver:v1.35.7
+--platform=linux/amd64 registry.k8s.io/kube-controller-manager:v1.35.7
+--platform=linux/amd64 registry.k8s.io/kube-scheduler:v1.35.7
+--platform=linux/amd64 registry.k8s.io/kube-proxy:v1.35.7
+--platform=linux/amd64 registry.k8s.io/coredns/coredns:v1.13.1
+--platform=linux/amd64 registry.k8s.io/pause:3.10.1
+--platform=linux/amd64 registry.k8s.io/etcd:3.6.6-0
+--platform=linux/amd64 registry.k8s.io/conformance:v1.35.7
